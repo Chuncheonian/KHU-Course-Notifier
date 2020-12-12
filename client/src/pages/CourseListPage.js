@@ -140,7 +140,7 @@ class CourseListPage extends Component {
         return c.search.indexOf(this.state.searchKeyword) > -1;
       });
       return data.map((c) => {
-        return <Course stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} distance={c.distance} category={c.category} location={c.location} maxAltitude={c.maxAltitude} minAltitude={c.minAltitude} level={c.level} form={c.form} search={c.search} />
+        return <Course stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} distance={c.distance} category={c.category} location={c.location} maxAltitude={c.maxAltitude} minAltitude={c.minAltitude} level={c.level} form={c.form} search={c.search} kmlURL={c.kmlURL} />
       });
     }
     const { classes } = this.props;

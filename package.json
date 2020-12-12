@@ -1,8 +1,8 @@
 {
-  "name": "khucoursenotifier",
+  "name": "khu-course-notifier",
   "version": "1.0.0",
   "description": "React+Node.js+MySQL",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js",

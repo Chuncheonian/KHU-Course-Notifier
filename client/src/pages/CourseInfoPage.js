@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CourseDetail from '../components/CourseDetail';
+import CourseMap from '../components/CourseMap';
 import Paper from '@material-ui/core/Paper';
 // import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -24,8 +25,8 @@ const styles = theme => ({
   },
   paper: {
     marginTop: 100,
-    marginLeft: 500,
-    marginRight: 500
+    marginLeft: 300,
+    marginRight: 300
   },
   progress: {
     margin: theme.spacing.unit * 2
@@ -84,6 +85,38 @@ const styles = theme => ({
     },
   }
 });
+
+// Return map bounds based on list of places
+const getMapBounds = (map, maps, places) => {
+  const bounds = new maps.LatLngBounds();
+
+  places.forEach((place) => {
+    bounds.extend(new maps.LatLng(
+      place.geometry.location.lat,
+      place.geometry.location.lng,
+    ));
+  });
+  return bounds;
+};
+
+// Re-center map when resizing the window
+const bindResizeListener = (map, maps, bounds) => {
+  maps.event.addDomListenerOnce(map, 'idle', () => {
+    maps.event.addDomListener(window, 'resize', () => {
+      map.fitBounds(bounds);
+    });
+  });
+};
+
+// Fit map to its bounds after the api is loaded
+const apiIsLoaded = (map, maps, places) => {
+  // Get bounds by our places
+  const bounds = getMapBounds(map, maps, places);
+  // Fit map to bounds
+  map.fitBounds(bounds);
+  // Bind the resize listener
+  bindResizeListener(map, maps, bounds);
+};
 
 class CourseInfoPage extends Component {
   constructor(props) {
@@ -161,8 +194,10 @@ class CourseInfoPage extends Component {
           </Toolbar>
         </AppBar>
         
-        {/* 여기에 지도 추가 예정 */}
-
+        {this.state.course ? this.state.course.map((c) => {
+            return (<CourseMap stateRefresh={this.stateRefresh} kmlURL={c.kmlURL} />);
+          }) : <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />}
+        
         <Paper className={classes.paper} variant="outlined">
           {this.state.course ? this.state.course.map((c) => {
             return (<CourseDetail stateRefresh={this.stateRefresh} key={c.id} id={c.id} name={c.name} distance={c.distance} category={c.category} location={c.location} maxAltitude={c.maxAltitude} minAltitude={c.minAltitude} level={c.level} form={c.form} />);

@@ -21,7 +21,7 @@ class Course extends React.Component {
         <TableCell className={classes.tableCell}>{this.props.name}</TableCell>
         <TableCell className={classes.tableCell}>{this.props.distance}</TableCell>
         <TableCell className={classes.tableCell}>{this.props.category}</TableCell>
-        <TableCell className={classes.tableCell}><Button variant="contained" color="primary" onClick={() => {this.props.history.push(`/information:${this.props.id}`);}}>상세정보</Button></TableCell>
+        <TableCell className={classes.tableCell}><Button variant="contained" color="primary" onClick={() => {this.props.history.push(`/information/${this.props.id}`);}}>상세정보</Button></TableCell>
       </TableRow>
     )
   }
