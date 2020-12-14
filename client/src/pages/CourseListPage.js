@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Course from '../components/Course';
+import EntireMap from '../components/EntireMap';
 import Paper from '@material-ui/core/Paper';
 import { Table, TableHead, TableBody, TableRow, TableCell }from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   root: {
@@ -20,11 +21,18 @@ const styles = theme => ({
     marginTop: 15,
     marginBottom: 15,
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   paper: {
     marginLeft: 18,
-    marginRight: 18
+    marginRight: 18,
+    marginBottom: 20,
+  },
+  paperMap: {
+    marginTop: theme.spacing.unit * 5,
+    marginLeft: theme.spacing.unit * 54.1,
+    marginRight: theme.spacing.unit * 54.1,
+    marginBottom: theme.spacing.unit * 5,
   },
   progress: {
     margin: theme.spacing.unit * 2
@@ -144,7 +152,7 @@ class CourseListPage extends Component {
       });
     }
     const { classes } = this.props;
-    const cellList = ["번호", "지도", "이름", "거리", "카테고리", "상세정보"];
+    const cellList = ["번호", "이름", "거리", "카테고리", "난이도","상세정보"];
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -161,7 +169,7 @@ class CourseListPage extends Component {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search"
+                placeholder="통합검색"
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -173,9 +181,11 @@ class CourseListPage extends Component {
             </div>
           </Toolbar>
         </AppBar>
-        {/* <div className={classes.menu}> */}
-        {/* <CustomerAdd stateRefresh={this.stateRefresh}/> */}
-        {/* </div> */}
+        
+        <Paper className={classes.paperMap}>
+          <EntireMap/>
+        </Paper>
+
         <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
@@ -197,10 +207,6 @@ class CourseListPage extends Component {
             </TableBody>
           </Table>
         </Paper>
-        {/* <div> */}
-          {/* <Link to ='/information'>상세정보</Link> */}
-          {/* <Route path="/information" component={CourseInfoPage} exact={true} /> */}
-        {/* </div> */}
       </div>
     );
   }
